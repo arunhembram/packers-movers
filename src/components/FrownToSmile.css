@@ -1,0 +1,323 @@
+/* Styles for Frown to Smile Hero Animation */
+
+.flex-center {
+  text-align: center;
+}
+
+.emoji-container {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  margin: 20px auto;
+  width: 200px;
+  height: 200px;
+}
+
+.emoji {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  animation: bounce 2.5s ease-in-out forwards;
+  animation-delay: 1.5s;
+}
+
+.face {
+  width: 100%;
+  height: 100%;
+  background: #FFD93D;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 8px 20px rgba(255, 217, 61, 0.3);
+}
+
+.eye {
+  width: 20px;
+  height: 20px;
+  background: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 60px;
+  overflow: hidden;
+  animation: synchronizedBlink 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.eye.left {
+  left: 55px;
+}
+
+.eye.right {
+  right: 55px;
+}
+
+.eye-shine {
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  opacity: 1;
+}
+
+.upper-eyelid {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: #FFD93D;
+  top: 0;
+  left: 0;
+  border-radius: 50% 50% 0 0;
+  transform: translateY(-100%);
+  animation: eyelidBlink 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.lower-eyelid {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: #FFD93D;
+  bottom: 0;
+  left: 0;
+  border-radius: 0 0 50% 50%;
+  transform: translateY(100%);
+  animation: lowerEyelidBlink 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.mouth-container {
+  position: absolute;
+  left: 50%;
+  top: 120px;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 40px;
+}
+
+.teeth {
+  position: absolute;
+  width: 80px;
+  height: 18px;
+  background: white;
+  left: 50%;
+  top: 5px;
+  transform: translateX(-50%);
+  opacity: 0;
+  border-radius: 0 0 10px 10px;
+  animation: teethReveal 2s ease-in-out forwards;
+  animation-delay: 1.8s;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.tooth {
+  position: absolute;
+  width: 8px;
+  height: 18px;
+  background: white;
+  top: 0;
+  border-radius: 4px 4px 0 0;
+  transform: translateY(-100%);
+  animation: teethDrop 2s ease-in-out forwards;
+  animation-delay: 1.8s;
+}
+
+.tooth:nth-child(1) { left: 0px; animation-delay: 1.8s; }
+.tooth:nth-child(2) { left: 12px; animation-delay: 1.9s; }
+.tooth:nth-child(3) { left: 24px; animation-delay: 2.0s; }
+.tooth:nth-child(4) { left: 36px; animation-delay: 2.1s; }
+.tooth:nth-child(5) { left: 48px; animation-delay: 2.0s; }
+.tooth:nth-child(6) { left: 60px; animation-delay: 1.9s; }
+.tooth:nth-child(7) { left: 72px; animation-delay: 1.8s; }
+
+.mouth {
+  position: absolute;
+  width: 70px;
+  height: 35px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+  border-radius: 35px 35px 0 0;
+  background: #333;
+  clip-path: ellipse(35px 18px at 50% 100%);
+  animation: mouthTransform 3s ease-in-out forwards;
+  animation-delay: 0.8s;
+  z-index: 2;
+}
+
+.message {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #333;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.highlight {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.restart-btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.restart-btn:hover {
+  background: #5a67d8;
+  transform: translateY(-2px);
+}
+
+/* Animation Keyframes */
+@keyframes synchronizedBlink {
+  0%, 85% {
+    height: 20px;
+    border-radius: 50%;
+  }
+  90% {
+    height: 2px;
+    border-radius: 10px;
+  }
+  95% {
+    height: 20px;
+    border-radius: 50%;
+  }
+  100% {
+    height: 20px;
+    border-radius: 50%;
+  }
+}
+
+@keyframes eyelidBlink {
+  0%, 85% {
+    transform: translateY(-100%);
+  }
+  90% {
+    transform: translateY(0%);
+  }
+  95% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes lowerEyelidBlink {
+  0%, 85% {
+    transform: translateY(100%);
+  }
+  90% {
+    transform: translateY(0%);
+  }
+  95% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes mouthTransform {
+  0% {
+    width: 70px;
+    height: 35px;
+    border-radius: 50px 50px 25px 25px;
+    transform: translate(-50%, -50%);
+    clip-path: ellipse(35px 20px at 50% 85%);
+  }
+  30% {
+    width: 50px;
+    height: 20px;
+    border-radius: 40px 40px 15px 15px;
+    transform: translate(-50%, -50%);
+    clip-path: ellipse(25px 12px at 50% 75%);
+  }
+  50% {
+    width: 40px;
+    height: 4px;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+    clip-path: none;
+  }
+  70% {
+    width: 60px;
+    height: 25px;
+    border-radius: 15px 15px 30px 30px;
+    transform: translate(-50%, -50%);
+    clip-path: none;
+  }
+  100% {
+    width: 80px;
+    height: 30px;
+    border-radius: 0 0 60px 60px;
+    transform: translate(-50%, -50%);
+    clip-path: none;
+  }
+}
+
+@keyframes teethReveal {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes teethDrop {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1.15);
+  }
+  90% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes finalGlow {
+  0%, 100% {
+    box-shadow: 0 8px 20px rgba(255, 217, 61, 0.3);
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(255, 217, 61, 0.5);
+  }
+}
+
+.face {
+  animation: finalGlow 3s ease-in-out infinite;
+  animation-delay: 4s;
+}

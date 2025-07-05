@@ -1,0 +1,332 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+
+import { useSection } from '../context/SectionContext.jsx';
+
+// New imports for service images
+import goodsShippingImage from '../assets/images/services/goods-shipping.jpg';
+import translations from '../i18n/translations.js';
+import { useLanguage } from '../context/LanguageContext.jsx';
+import carShippingImage from '../assets/images/services/car-shipping.jpg';
+import bikeShippingImage from '../assets/images/services/bike-shipping.jpg';
+import factoryRelocationImage from '../assets/images/services/factory-relocation.jpg';
+import machineryShippingImage from '../assets/images/services/machinery-shipping.jpg';
+
+export default function Services() {
+  const { setCurrentSection } = useSection();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [hasAdvanced, setHasAdvanced] = useState(false); // Track if we've already advanced
+  const [cardSpacing, setCardSpacing] = useState(160); // Dynamic card spacing
+  const [isMobile, setIsMobile] = useState(false); // Initialize in useEffect
+  
+  const carouselRef = useRef(null);
+  const sectionRef = useRef(null);
+  const autoPlayRef = useRef();
+  
+  const { lang } = useLanguage();
+  const tServices = translations[lang]?.services || translations.en.services;
+  const headerTitle = translations[lang]?.servicesHeader || translations.en.servicesHeader;
+  const services = tServices.map((s, idx) => ({
+    ...s,
+    image: [goodsShippingImage, carShippingImage, bikeShippingImage, factoryRelocationImage, machineryShippingImage][idx]
+  }));
+
+  const sectionName = translations[lang]?.sections.services || translations.en.sections.services;
+ 
+
+  const totalServices = services.length;
+  const swipeThreshold = 50; // Minimum distance to trigger swipe
+
+  // Intersection Observer to update current section in header
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setCurrentSection(sectionName);
+        }
+      },
+      { threshold: 0.4 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, [setCurrentSection]);
+
+  // Update responsive settings
+  useEffect(() => {
+    const updateResponsive = () => {
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      const newCardSpacing = isMobile ? 200 : 180; // Increased card spacing for mobile view
+      setCardSpacing(newCardSpacing);
+    };
+
+    updateResponsive();
+    window.addEventListener('resize', updateResponsive);
+    return () => window.removeEventListener('resize', updateResponsive);
+  }, []);
+
+  // Memoized autoplay functions
+  const startAutoPlay = useCallback(() => {
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+    
+    const autoplayInterval = isMobile ? 7000 : 5000;
+    autoPlayRef.current = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % totalServices);
+    }, autoplayInterval);
+  }, [totalServices, isMobile]);
+
+  const stopAutoPlay = useCallback(() => {
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+      autoPlayRef.current = null;
+    }
+  }, []);
+
+  // Autoplay management - only start/stop when dragging begins or ends
+  useEffect(() => {
+    if (isDragging) {
+      stopAutoPlay();
+    } else {
+      startAutoPlay();
+    }
+    return stopAutoPlay;
+  }, [isDragging, startAutoPlay, stopAutoPlay]);
+
+  // Calculate card positioning and styling
+  const getCardStyle = useCallback((serviceIndex) => {
+    // 1) Compute base relative position
+    let relativePosition = serviceIndex - currentIndex;
+    
+    // Handle wrap-around for infinite effect
+    relativePosition = (relativePosition + totalServices) % totalServices;
+    if (relativePosition > totalServices / 2) relativePosition -= totalServices;
+    
+    // Clamp relative position to prevent excessive movement
+    const maxSpread = isMobile ? 2.5 : 3.5; // Limit how far cards spread
+    const clampedPosition = Math.max(-maxSpread, Math.min(maxSpread, relativePosition));
+    
+    // 2) Apply drag influence with clamping to prevent excessive movement
+    const maxDragInfluence = 0.8; // Limit how much drag affects position
+    const dragInfluence = Math.max(-maxDragInfluence, Math.min(maxDragInfluence, dragOffset / cardSpacing));
+    const finalPosition = clampedPosition + dragInfluence; 
+    const absPosition = Math.abs(finalPosition);
+    
+    // 3) Styling buckets with wider center threshold - NO ROTATION
+    let transform = '';
+    let zIndex = 10;
+    let opacity = 1;
+    
+    const scaleFactor = isMobile ? 1.0 : 1.0;
+    const opacityFactor = isMobile ? 0.9 : 1.0;
+    const translationFactor = isMobile ? 0.7 : 1.0;
+    const translation = finalPosition * cardSpacing * translationFactor;
+    
+    if (absPosition > 2) {
+      return {
+        opacity: 0,
+        transform: `scale(0)`,
+        zIndex: 0,
+      };
+    }
+    
+    if (absPosition < 0.5) { // wider center threshold
+      transform = `translateX(${finalPosition * cardSpacing * scaleFactor}px) scale(${scaleFactor})`;
+      zIndex = 30; // Higher for center
+    } else if (absPosition <= 1) {
+      transform = `translateX(${finalPosition * cardSpacing * scaleFactor}px) scale(${0.9 * scaleFactor})`;
+      opacity = opacityFactor * (1 - 0.2 * absPosition);
+      zIndex = 10; // Lower for sides
+    } else {
+      transform = `translateX(${finalPosition * cardSpacing * scaleFactor}px) scale(${0.8 * scaleFactor})`;
+      opacity = opacityFactor * (0.8 - 0.3 * (absPosition - 1));
+      zIndex = 0;
+    }
+
+    return {
+      transform,
+      zIndex,
+      opacity,
+      transition: 'transform 0.4s ease, opacity 0.3s ease',
+    };
+  }, [currentIndex, dragOffset, totalServices, cardSpacing, isMobile]);
+
+  // Unified drag handlers
+  const handleDragStart = useCallback((e, index) => {
+    e.preventDefault();
+    setIsDragging(true);
+    setHasAdvanced(false); // Reset advancement flag
+    
+    const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
+    setStartX(clientX);
+    
+    dragStartIndexRef.current = index; 
+  }, []);
+
+  const handleDragMove = useCallback((e) => {
+    if (!isDragging) return;
+    
+    const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
+    const diff = clientX - startX;
+    
+    // Only advance once per drag session when threshold is crossed
+    if (!hasAdvanced && Math.abs(diff) > swipeThreshold) {
+      setHasAdvanced(true);
+      setCurrentIndex(prev => {
+        if (diff < 0) {
+          // swipe LEFT → show next (right) card
+          return (prev + 1) % totalServices;
+        } else {
+          // swipe RIGHT → show previous (left) card
+          return (prev - 1 + totalServices) % totalServices;
+        }
+      });
+    }
+    
+    // Set drag offset but clamp it to prevent excessive movement
+    const clampedDiff = Math.max(-cardSpacing, Math.min(cardSpacing, diff));
+    setDragOffset(clampedDiff * 0.3); // Reduced multiplier for smoother feel
+  }, [isDragging, startX, hasAdvanced, swipeThreshold, totalServices, cardSpacing]);
+  
+  const handleDragEnd = useCallback(() => {
+    if (!isDragging) return;
+    
+    setIsDragging(false);
+    setDragOffset(0);
+    setHasAdvanced(false); // Reset for next drag
+  }, [isDragging]);
+
+  // Global event listeners for drag
+  useEffect(() => {
+    if (isDragging) {
+      const handleMove = (e) => {
+        e.preventDefault();
+        handleDragMove(e);
+      };
+      
+      const handleEnd = () => {
+        handleDragEnd();
+      };
+
+      // Add event listeners
+      document.addEventListener('mousemove', handleMove);
+      document.addEventListener('mouseup', handleEnd);
+      document.addEventListener('touchmove', handleMove, { passive: false });
+      document.addEventListener('touchend', handleEnd);
+      document.addEventListener('mouseleave', handleEnd);
+      document.addEventListener('touchcancel', handleEnd);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleMove);
+        document.removeEventListener('mouseup', handleEnd);
+        document.removeEventListener('touchmove', handleMove);
+        document.removeEventListener('touchend', handleEnd);
+        document.removeEventListener('mouseleave', handleEnd);
+        document.removeEventListener('touchcancel', handleEnd);
+      };
+    }
+  }, [isDragging, handleDragMove, handleDragEnd]);
+  
+  const goToSlide = useCallback((index) => {
+    stopAutoPlay();
+    setCurrentIndex(index);
+    setDragOffset(0);
+    // Restart autoplay after manual navigation
+    setTimeout(() => {
+      if (!isDragging) {
+        startAutoPlay();
+      }
+    }, 100);
+  }, [isDragging, startAutoPlay, stopAutoPlay]);
+
+  const handleBookNow = useCallback((serviceName) => {
+    alert(`Booking ${serviceName} - This would open a booking form or navigate to booking page`);
+  }, []);
+
+  return (
+    <section 
+      ref={sectionRef} 
+      id="services" 
+      className="min-h-screen bg-gray-900 py-2 sm:py-4 overflow-hidden flex flex-col"
+    >
+      {/* Header Section */}
+      <div className="w-full mb-0 pt-8 mt-32 sm:mt-8">
+        <h2 className="text-3xl font-bold text-center text-white mb-0">
+          Our Services
+        </h2>
+      </div>
+      
+      {/* Card Container Section */}
+      <div className="flex-1 flex items-center justify-center mt-[-46.8rem] sm:mt-0">
+        <div 
+          className="relative w-full max-w-6xl h-96 sm:h-[30rem] flex justify-center items-center mx-auto" 
+          style={{ 
+            perspective: '1000px',
+            touchAction: 'pan-y',
+            userSelect: 'none'
+          }}
+          onTouchMove={(e) => {
+            e.preventDefault();
+            handleDragMove(e);
+          }}
+        >
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="absolute w-auto max-w-[95vw] sm:w-80 md:w-96 h-auto bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing transition-shadow duration-200 hover:shadow-3xl"
+              style={{
+                ...getCardStyle(index)
+              }}
+              onMouseDown={(e) => handleDragStart(e, index)}
+              onTouchStart={(e) => handleDragStart(e, index)}
+            >
+              <div className="w-full h-full p-4 sm:p-6 flex flex-col justify-between relative overflow-hidden bg-white rounded-xl">
+                {/* Service image area */}
+                <div className="relative w-full aspect-square overflow-hidden rounded-t-lg mb-6 sm:mb-8 md:mb-6">
+                  <img 
+                    src={service.image} 
+                    alt={service.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                
+                {/* Service details */}
+                <div className="mt-4 flex flex-col items-center">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">{service.title}</h3>
+                  <p className="text-gray-800 text-center mb-4">{service.description}</p>
+                  <button 
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                    onClick={() => handleBookNow(service.name)}
+                  >
+                    Book Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Footer Navigation Section */}
+      <div className="w-full mt-[-45rem] sm:mt-8">
+        <div className="flex justify-center space-x-3">
+          {services.map((_, index) => (
+            <button
+              key={index}
+              className={`w-3.5 h-3.5 rounded-full transition-all duration-300 ${
+                index === currentIndex
+                  ? 'bg-white scale-125' 
+                  : 'bg-white/40 hover:bg-white/60'
+              }`}
+              onClick={() => goToSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
