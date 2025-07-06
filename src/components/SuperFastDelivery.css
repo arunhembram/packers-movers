@@ -223,7 +223,7 @@
 /* Responsive tweaks for mobile screens */
 @media (max-width: 640px) {
   .dashboard-wrapper {
-    transform: scale(0.7);
+    transform: scale(0.84); /* 20% larger than previous 0.7 */
     transform-origin: center;
     gap: 24px;
   }
@@ -233,19 +233,18 @@
   }
   /* override needle only if needed */
   .speed-display {
-    bottom: 30px;
-    font-size: 18px;
-  }
-  .digit-container {
-    width: 24px;
-    height: 34px;
-  }
-  .digit {
-    font-size: 16px;
-    line-height: 34px;
-  }
-  .odometer {
+    bottom: 34px;
     font-size: 22px;
   }
+  .digit-container {
+    width: 28px; /* +~17% to match overall 20% scale */
+    height: 40px;
+  }
+  .digit {
+    font-size: 19px;
+    line-height: 40px;
+  }
+  .odometer {
+    font-size: 26px;
+  }
 }
-

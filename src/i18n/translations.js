@@ -12,9 +12,9 @@ const translations = {
       odometerLabel: 'TOTAL KMs SERVICED'
     },
     itemsDamaged: {
-      header: 'Items Damaged or Missing',
+      header: 'Items Damaged',
       subtitle: 'This countdown to 0 will build more trust',
-      safetyTitle: 'Safety is our first priority',
+      safetyTitle: 'Total Damaged',
       badge: 'Zero Damage Guarantee'
     },
     socialMedia: {
@@ -51,7 +51,7 @@ const translations = {
     testimonialsHeader: 'Customer Reviews',
     reviewsNote: 'There are unlimited positive reviews in single window from all over India',
     services: [
-      { title: 'Goods Shipping', description: 'Safe and timely delivery of your packages across the region' },
+      { title: 'Household Shipping', description: 'Safe and timely delivery of your packages across the region' },
       { title: 'Car Shipping', description: 'Secure transportation for your vehicles with specialized carriers' },
       { title: 'Bike Shipping', description: 'Reliable motorcycle and bicycle transport services' },
       { title: 'Factory Relocation', description: 'Comprehensive industrial moving solutions for machinery and equipment' },
@@ -85,9 +85,9 @@ const translations = {
       odometerLabel: 'সর্বমোট কিলোমিটার পরিষেবা'
     },
     itemsDamaged: {
-      header: 'ক্ষতিগ্রস্ত বা হারানো আইটেম',
+      header: 'ক্ষতিগ্রস্ত আইটেম',
       subtitle: '0 এ কাউন্টডাউন আরও বিশ্বাস তৈরি করবে',
-      safetyTitle: 'নিরাপত্তা আমাদের প্রথম অগ্রাধিকার',
+      safetyTitle: 'মোট ক্ষতি',
       badge: 'শূন্য ক্ষতি গ্যারান্টি'
     },
     socialMedia: {
@@ -124,7 +124,7 @@ const translations = {
     testimonialsHeader: 'গ্রাহক পর্যালোচনা',
     reviewsNote: 'সারা ভারত থেকে অসংখ্য ইতিবাচক রিভিউ একক জানালায় প্রদর্শিত হচ্ছে',
     services: [
-      { title: 'পণ্য পরিবহন', description: 'আপনার প্যাকেজ সময়মতো এবং নিরাপদে পৌঁছে দিন' },
+      { title: 'গৃহস্থালি পরিবহন', description: 'আপনার গৃহস্থালি সরঞ্জাম এবং প্যাকেজ নিরাপদে ও সময়মতো পৌঁছে দিন' },
       { title: 'কার পরিবহন', description: 'বিশেষ ক্যারিয়ার দিয়ে আপনার গাড়ি নিরাপদে পরিবহন' },
       { title: 'বাইক পরিবহন', description: 'বিশ্বস্ত মোটরসাইকেল ও সাইকেল পরিবহন পরিষেবা' },
       { title: 'কারখানা স্থানান্তর', description: 'যন্ত্রপাতি ও সরঞ্জাম স্থানান্তরের পূর্ণাঙ্গ সমাধান' },
@@ -158,9 +158,9 @@ const translations = {
       odometerLabel: 'कुल किमी सेवा'
     },
     itemsDamaged: {
-      header: 'आइटम क्षतिग्रस्त या गायब',
+      header: 'आइटम क्षतिग्रस्त',
       subtitle: '0 तक की यह काउंटडाउन अधिक भरोसा बनाएगी',
-      safetyTitle: 'सुरक्षा हमारी पहली प्राथमिकता है',
+      safetyTitle: 'कुल क्षति',
       badge: 'ज़ीरो डैमेज गारंटी'
     },
     socialMedia: {
@@ -197,7 +197,7 @@ const translations = {
     testimonialsHeader: 'ग्राहक समीक्षा',
     reviewsNote: 'सभी भारत से असीमित सकारात्मक समीक्षाएँ एक ही विंडो में दिखाई जा रही हैं',
     services: [
-      { title: 'माल शिपिंग', description: 'आपके पैकेज को सुरक्षित और समय पर पहुँचाना' },
+      { title: 'घरेलू शिपिंग', description: 'आपका घरेलू सामान सुरक्षित और समय पर पहुँचाना' },
       { title: 'कार शिपिंग', description: 'विशेष वाहनों से आपके वाहन का सुरक्षित परिवहन' },
       { title: 'बाइक शिपिंग', description: 'विश्वसनीय मोटरसाइकिल और साइकिल परिवहन सेवा' },
       { title: 'फ़ैक्टरी स्थानांतरण', description: 'मशीनरी और उपकरण के लिए सम्पूर्ण औद्योगिक समाधान' },

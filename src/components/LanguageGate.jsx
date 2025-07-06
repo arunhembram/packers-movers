@@ -14,6 +14,15 @@ export default function LanguageGate({ children, translations }) {
   const [count, setCount] = useState(3);
   const progressRef = useRef(null);
 
+  // Toggle a global class to pause hero animations while overlay is active
+  useEffect(() => {
+    if (stage !== 'done') {
+      document.body.classList.add('app-loading');
+    } else {
+      document.body.classList.remove('app-loading');
+    }
+  }, [stage]);
+
   // Handle countdown effect
   useEffect(() => {
     if (stage !== 'countdown') return;
@@ -31,7 +40,10 @@ export default function LanguageGate({ children, translations }) {
         if (next <= 0) {
           clearInterval(interval);
           // brief pause before hiding overlay
-          setTimeout(() => setStage('done'), 1000);
+          setTimeout(() => {
+            setStage('done');
+            window.dispatchEvent(new Event('overlayDone'));
+          }, 1000);
           
         }
         return next;
@@ -58,6 +70,7 @@ export default function LanguageGate({ children, translations }) {
         buttons[idx].click();
       } else if (e.key === 'Escape') {
         setStage('done');
+          window.dispatchEvent(new Event('overlayDone'));
       }
     };
     window.addEventListener('keydown', handleKey);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import './FrownToSmile.css';
-import './HeroBackground.css';
+import './HeroSectionClean.css';
 
 const FrownToSmile = ({ id, className = '' }) => {
   const { lang, translations } = useLanguage();
@@ -76,6 +76,24 @@ const FrownToSmile = ({ id, className = '' }) => {
   const [count, setCount] = useState(999);
 
   useEffect(() => {
+    // Listen for overlay completion to restart animations
+    const handleOverlayDone = () => {
+      restartAnimation(); // restart emoji bounce/glow when overlay ends
+      // Restart floating box animations
+      const boxes = document.querySelectorAll('.box');
+      boxes.forEach(box => {
+        box.style.animation = 'none';
+        /* eslint-disable no-unused-expressions */
+        box.offsetHeight;
+        /* eslint-enable no-unused-expressions */
+        box.style.animation = 'float 12s linear infinite';
+      });
+    };
+    window.addEventListener('overlayDone', handleOverlayDone);
+    return () => window.removeEventListener('overlayDone', handleOverlayDone);
+  }, []);
+
+  useEffect(() => {
     const target = 9999;
     let current = 999;
     const fastIncrement = 1; // value added every tick during initial count-up
@@ -101,6 +119,7 @@ const FrownToSmile = ({ id, className = '' }) => {
     return () => clearInterval(fastTimer);
   }, []);
 
+
   return (
     <section id={id} className={`hero-section relative flex flex-col md:flex-row items-center justify-center min-h-[80vh] md:min-h-screen pt-16 md:pt-24 px-4 ${className}`}>
     {/* Animated Hero Background */}
@@ -113,17 +132,17 @@ const FrownToSmile = ({ id, className = '' }) => {
           <div className="building" />
           <div className="building" />
         </div>
-        <div className="floating-boxes">
-          <div className="box" />
-          <div className="box" />
-          <div className="box" />
-          <div className="box" />
-          <div className="box" />
-          <div className="box" />
-          <div className="box" />
-          <div className="box" />
-        </div>
         <div className="location-pin" />
+      </div>
+      <div className="floating-boxes">
+        <div className="box" />
+        <div className="box" />
+        <div className="box" />
+        <div className="box" />
+        <div className="box" />
+        <div className="box" />
+        <div className="box" />
+        <div className="box" />
       </div>
       <div className="moving-strip">
         <div className="moving-item" />

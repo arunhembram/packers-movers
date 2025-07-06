@@ -5,6 +5,8 @@
 }
 
 .emoji-container {
+  position: relative;
+  z-index: 3; /* above particles */
   width: 150px;
   height: 150px;
   position: relative;

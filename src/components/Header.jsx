@@ -78,7 +78,7 @@ export default function Header() {
           <FaBars />
         </button>
         <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-          <span className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold">{currentSection}</span>
+          <div className="text-xl sm:text-2xl font-bold">{currentSection}</div>
         </div>
         <nav className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden absolute top-full left-0 right-0 bg-white shadow-md py-4`}>
           <ul className="flex flex-col md:flex-row md:space-x-8">

@@ -1,9 +1,23 @@
-/* Animated Hero Section Background */
+/* Cleaned Hero Section Background Animation Styles */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
+}
 
 .hero-section {
   position: relative;
   height: 100vh;
   background: linear-gradient(135deg, #003366 0%, #0066cc 50%, #ff9900 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
@@ -13,7 +27,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 1; /* background layer */
 }
 
 .cityscape {
@@ -45,6 +59,7 @@
   50% { transform: translateY(-10px); }
 }
 
+/* Floating particles */
 .floating-boxes {
   position: absolute;
   top: 0;
@@ -52,13 +67,14 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
+  z-index: 2; /* particles above background */
 }
 
 .box {
   position: absolute;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.8);
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 153, 0, 0.8);
   border-radius: 4px;
   animation: float 12s linear infinite;
 }
@@ -73,12 +89,13 @@
 .box:nth-child(8) { left: 80%; animation-delay: 14s; animation-duration: 15s; }
 
 @keyframes float {
-  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+  0%   { transform: translateY(110vh) rotate(0deg);   opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { transform: translateY(-50px) rotate(360deg); opacity: 0; }
 }
 
+/* Moving strip */
 .moving-strip {
   position: absolute;
   bottom: 0;
@@ -105,10 +122,11 @@
 .moving-item:nth-child(4) { animation-delay: 6s; }
 
 @keyframes slideLeftRight {
-  0% { left: -50px; }
+  0%   { left: -50px; }
   100% { left: 100%; }
 }
 
+/* Location pin */
 .location-pin {
   position: absolute;
   top: 20%;
@@ -119,6 +137,7 @@
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
   animation: pinDrop 3s ease-in-out infinite;
+  z-index: 2;
 }
 
 .location-pin::after {
@@ -135,5 +154,16 @@
 
 @keyframes pinDrop {
   0%, 100% { transform: rotate(-45deg) scale(1); }
-  50% { transform: rotate(-45deg) scale(1.2); }
+  50%      { transform: rotate(-45deg) scale(1.2); }
+}
+
+/* Pause all hero animations until countdown card is closed */
+body.app-loading .hero-section * {
+  animation-play-state: paused !important;
+}
+
+/* Ensure main hero content is above particles */
+.emoji-container {
+  position: relative;
+  z-index: 3;
 }

@@ -58,7 +58,7 @@ export default function Services() {
     const updateResponsive = () => {
       const mobile = window.innerWidth < 640;
       setIsMobile(mobile);
-      const newCardSpacing = isMobile ? 200 : 180; // Increased card spacing for mobile view
+      const newCardSpacing = mobile ? 140 : 180; // Reduced spacing for narrower mobile cards
       setCardSpacing(newCardSpacing);
     };
 
@@ -73,7 +73,7 @@ export default function Services() {
       clearInterval(autoPlayRef.current);
     }
     
-    const autoplayInterval = isMobile ? 7000 : 5000;
+    const autoplayInterval = 2000; // 2s per card
     autoPlayRef.current = setInterval(() => {
       setCurrentIndex(prev => (prev + 1) % totalServices);
     }, autoplayInterval);
@@ -102,8 +102,18 @@ export default function Services() {
     let relativePosition = serviceIndex - currentIndex;
     
     // Handle wrap-around for infinite effect
-    relativePosition = (relativePosition + totalServices) % totalServices;
-    if (relativePosition > totalServices / 2) relativePosition -= totalServices;
+    if (relativePosition > totalServices / 2) {
+      relativePosition -= totalServices;
+    } else if (relativePosition < -totalServices / 2) {
+      relativePosition += totalServices;
+    }
+    
+    // Special handling for first/last card transitions
+    if (currentIndex === totalServices - 1 && serviceIndex === 0) {
+      relativePosition = 1; // First card comes from right after last card
+    } else if (currentIndex === 0 && serviceIndex === totalServices - 1) {
+      relativePosition = -1; // Last card comes from left after first card
+    }
     
     // Clamp relative position to prevent excessive movement
     const maxSpread = isMobile ? 2.5 : 3.5; // Limit how far cards spread
@@ -112,7 +122,7 @@ export default function Services() {
     // 2) Apply drag influence with clamping to prevent excessive movement
     const maxDragInfluence = 0.8; // Limit how much drag affects position
     const dragInfluence = Math.max(-maxDragInfluence, Math.min(maxDragInfluence, dragOffset / cardSpacing));
-    const finalPosition = clampedPosition + dragInfluence; 
+    const finalPosition = isDragging ? clampedPosition + dragInfluence : clampedPosition; 
     const absPosition = Math.abs(finalPosition);
     
     // 3) Styling buckets with wider center threshold - NO ROTATION
@@ -120,9 +130,9 @@ export default function Services() {
     let zIndex = 10;
     let opacity = 1;
     
-    const scaleFactor = isMobile ? 1.0 : 1.0;
-    const opacityFactor = isMobile ? 0.9 : 1.0;
-    const translationFactor = isMobile ? 0.7 : 1.0;
+    const scaleFactor = 1.0;  // same on all devices
+    const opacityFactor = 1.0;
+    const translationFactor = 1.0;
     const translation = finalPosition * cardSpacing * translationFactor;
     
     if (absPosition > 2) {
@@ -253,9 +263,9 @@ export default function Services() {
       className="min-h-screen bg-gray-900 py-2 sm:py-4 overflow-hidden flex flex-col"
     >
       {/* Header Section */}
-      <div className="w-full mb-0 pt-8 mt-32 sm:mt-8">
+      <div className="w-full mb-0 pt-8 mt-16 sm:mt-8">
         <h2 className="text-3xl font-bold text-center text-white mb-0">
-          Our Services
+          {headerTitle}
         </h2>
       </div>
       
@@ -276,7 +286,7 @@ export default function Services() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="absolute w-auto max-w-[95vw] sm:w-80 md:w-96 h-auto bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing transition-shadow duration-200 hover:shadow-3xl"
+              className="absolute w-64 max-w-[90vw] sm:w-80 md:w-96 h-auto bg-white rounded-2xl shadow-2xl cursor-grab active:cursor-grabbing transition-shadow duration-200 hover:shadow-3xl"
               style={{
                 ...getCardStyle(index)
               }}
