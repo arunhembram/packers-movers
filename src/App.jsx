@@ -8,7 +8,8 @@ import ItemsDamaged from './components/ItemsDamaged';
 import CEO from './components/CEO';
 import Testimonials from './components/Testimonials';
 import SocialMediaSlider from './components/SocialMediaSlider';
-import MapSection from './components/MapSection';
+import ContactSection from './components/ContactSection.jsx';
+import FloatingButton from './components/FloatingButton.jsx';
 import LanguageGate from './components/LanguageGate';
 
 // Import translations
@@ -27,7 +28,8 @@ function App() {
           <CEO id="ceo" className="min-h-screen" />
           <Testimonials id="testimonials" />
           <SocialMediaSlider id="social" className="min-h-screen" />
-          <MapSection id="contact" className="min-h-screen" />
+          <ContactSection id="contact" className="min-h-screen" />
+          <FloatingButton />
         </div>
       </SectionProvider>
     </LanguageGate>

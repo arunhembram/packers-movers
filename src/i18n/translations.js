@@ -50,6 +50,17 @@ const translations = {
     servicesHeader: 'Our Services',
     testimonialsHeader: 'Customer Reviews',
     reviewsNote: 'There are unlimited positive reviews in single window from all over India',
+      contactSection: {
+        header: 'Contact Us Now',
+        addressLabel: 'Address',
+        emailLabel: 'Email',
+        openingHoursLabel: 'Opening Hours',
+        monSat: 'Mon–Sat:',
+        sunday: 'Sunday:',
+        closed: '❌ Closed',
+        viewMap: 'View Us on Google Maps',
+        callNow: 'Call Now'
+      },
     services: [
       { title: 'Household Shipping', description: 'Safe and timely delivery of your packages across the region' },
       { title: 'Car Shipping', description: 'Secure transportation for your vehicles with specialized carriers' },
@@ -123,6 +134,17 @@ const translations = {
     servicesHeader: 'আমাদের সেবা',
     testimonialsHeader: 'গ্রাহক পর্যালোচনা',
     reviewsNote: 'সারা ভারত থেকে অসংখ্য ইতিবাচক রিভিউ একক জানালায় প্রদর্শিত হচ্ছে',
+      contactSection: {
+        header: 'এখনই যোগাযোগ করুন',
+        addressLabel: 'ঠিকানা',
+        emailLabel: 'ইমেল',
+        openingHoursLabel: 'খোলার সময়',
+        monSat: 'সোম–শনি:',
+        sunday: 'রবিবার:',
+        closed: '❌ বন্ধ',
+        viewMap: 'Google মানচিত্রে দেখুন',
+        callNow: 'কল করুন'
+      },
     services: [
       { title: 'গৃহস্থালি পরিবহন', description: 'আপনার গৃহস্থালি সরঞ্জাম এবং প্যাকেজ নিরাপদে ও সময়মতো পৌঁছে দিন' },
       { title: 'কার পরিবহন', description: 'বিশেষ ক্যারিয়ার দিয়ে আপনার গাড়ি নিরাপদে পরিবহন' },
@@ -196,6 +218,17 @@ const translations = {
     servicesHeader: 'हमारी सेवाएँ',
     testimonialsHeader: 'ग्राहक समीक्षा',
     reviewsNote: 'सभी भारत से असीमित सकारात्मक समीक्षाएँ एक ही विंडो में दिखाई जा रही हैं',
+      contactSection: {
+        header: 'अभी संपर्क करें',
+        addressLabel: 'पता',
+        emailLabel: 'ईमेल',
+        openingHoursLabel: 'खुलने का समय',
+        monSat: 'सोम–शनि:',
+        sunday: 'रविवार:',
+        closed: '❌ बंद',
+        viewMap: 'Google मानचित्र पर देखें',
+        callNow: 'कॉल करें'
+      },
     services: [
       { title: 'घरेलू शिपिंग', description: 'आपका घरेलू सामान सुरक्षित और समय पर पहुँचाना' },
       { title: 'कार शिपिंग', description: 'विशेष वाहनों से आपके वाहन का सुरक्षित परिवहन' },
