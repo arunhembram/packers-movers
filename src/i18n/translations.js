@@ -26,9 +26,9 @@ const translations = {
       footer: 'Beautiful social media buttons'
     },
     ceo: {
-      header: 'Meet Mr. Your Name',
+      header: 'Your Name and Experience',
       quote: '"your image and details will be uploaded here"',
-      badge: '15+ Years Experience',
+      badge: 'Your image in that circle',
       achievements: [
         '15+ Years in Logistics & Moving Services',
         'Customer satisfaction is the first priority',
@@ -99,9 +99,9 @@ const translations = {
       footer: 'সুন্দর সোশ্যাল মিডিয়া বাটন'
     },
     ceo: {
-      header: 'মি. আপনার নামের সাথে পরিচিত হন',
+      header: 'আপনার নাম ও অভিজ্ঞতা',
       quote: '"আপনার ছবি এবং বিবরণ এখানে আপলোড করা হবে"',
-      badge: '১৫+ বছরের অভিজ্ঞতা',
+      badge: 'সেই বৃত্তে আপনার ছবি',
       achievements: [
         '১৫+ বছর লজিস্টিকস ও মুভিং সেবায় অভিজ্ঞতা',
         'গ্রাহক সন্তুষ্টি আমাদের প্রথম অগ্রাধিকার',
@@ -172,9 +172,9 @@ const translations = {
       footer: 'सुंदर सोशल मीडिया बटन'
     },
     ceo: {
-      header: 'श्री. आपका नाम से मिलें',
+      header: 'आपका नाम और अनुभव',
       quote: '"आपकी छवि और विवरण यहाँ अपलोड किए जाएंगे"',
-      badge: '15+ वर्षों का अनुभव',
+      badge: 'उस घेरे में आपकी छवि',
       achievements: [
         '15+ वर्षों का लॉजिस्टिक्स और मूविंग सेवाओं का अनुभव',
         'ग्राहक संतुष्टि हमारी पहली प्राथमिकता है',
