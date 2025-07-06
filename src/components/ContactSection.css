@@ -213,7 +213,19 @@ body.contact-page::before {
 /* Mobile */
 @media (max-width:768px){ body.contact-page{ padding:20px 15px;} .contact-container{ grid-template-columns:1fr; gap:24px; padding:24px 20px 60px 20px; border-radius:20px;} .section-title{ font-size:28px; margin-bottom:24px;} .left-column{ margin-top:20px;} .map-frame{ width:250px; height:250px;} .contact-item{ padding:16px; margin-bottom:16px;} .contact-icon{ font-size:20px;} .contact-label{ font-size:15px;} .contact-value{ font-size:14px;} .call-button{ font-size:18px; padding:16px 24px; min-height:56px;} .call-button i{ font-size:20px;} .truck{ font-size:40px;} .box{ font-size:28px;} }
 /* Small Mobile */
-@media (max-width:480px){ body.contact-page{ padding:15px 10px;} .contact-container{ padding:20px 16px 50px 16px; gap:20px;} .section-title{ font-size:24px; margin-bottom:20px; flex-direction:column; gap:8px;} .section-title::after{ width:80px; height:3px;} .left-column{ margin-top:15px;} .map-frame{ width:200px; height:200px;} .contact-item{ padding:14px; margin-bottom:14px; flex-direction:column; align-items:flex-start; gap:12px;} .contact-icon{ font-size:18px;} .contact-text{ text-align:center; width:100%;} .contact-label{ font-size:14px;} .contact-value{ font-size:13px;} .hours-grid{ justify-content:center; gap:12px;} .call-button{ font-size:16px; padding:14px 20px; min-height:52px;} .call-button i{ font-size:18px;} .truck{ font-size:35px;} .box{ font-size:24px;} .truck-animation{ height:70px;} .packaging-boxes{ height:50px;} }
+@media (max-width:480px){ body.contact-page{ padding:15px 10px;} .contact-container{ padding:20px 16px 50px 16px; gap:20px;} .section-title{ font-size:24px; margin-bottom:20px; flex-direction:column; gap:8px;} .section-title::after{ width:80px; height:3px;} .left-column{ margin-top:15px;} .map-frame{ width:200px; height:200px;} .contact-item{ padding:14px; margin-bottom:14px; flex-direction:column; align-items:center; gap:12px;} .contact-icon{ font-size:18px;} .contact-text{ text-align:center; width:100%;} .contact-label{ font-size:14px;} .contact-value{ font-size:13px;} .hours-grid{ justify-content:center; gap:12px;} .call-button{ font-size:16px; padding:14px 20px; min-height:52px;} .call-button i{ font-size:18px;} .truck{ font-size:35px;} .box{ font-size:24px;} .truck-animation{ height:70px;} .packaging-boxes{ height:50px;} }
 @media (min-width:1280px){ .contact-container{ max-width:1170px; } }
+
+/* Center contact icons above titles on tablet and mobile */
+@media (max-width:1024px){
+  .contact-item{ flex-direction:column; align-items:center; text-align:center; }
+  .contact-text{ text-align:center; }
+  .contact-icon{ margin-bottom:8px; }
+}
+@media (max-width:768px){
+  .contact-item{ flex-direction:column; align-items:center; text-align:center; }
+  .contact-text{ text-align:center; }
+  .contact-icon{ margin-bottom:8px; }
+}
 /* Extra Small */
 @media (max-width:320px){ .contact-container{ padding:16px 12px 40px 12px;} .section-title{ font-size:20px;} .left-column{ margin-top:10px;} .map-frame{ width:180px; height:180px;} .contact-item{ padding:12px;} .call-button{ font-size:15px; padding:12px 16px; min-height:48px;} .truck{ font-size:30px;} .box{ font-size:20px;} }

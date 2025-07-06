@@ -23,7 +23,7 @@ const CEO = () => {
           observer.disconnect(); // run once
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.5 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -121,10 +121,11 @@ const CEO = () => {
                     <div
                       key={index}
                       style={{
-                        animation: `slide-right-to-center 0.8s ease-out forwards`,
-                        animationDelay: `${index * 0.3}s`,
+                        animation: isVisible ? `slide-right-to-center 0.8s ease-out forwards` : 'none',
+                        animationDelay: isVisible ? `${index * 0.3}s` : '0s',
                         animationFillMode: 'forwards',
-                        opacity: 0
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible ? 'translateX(0)' : 'translateX(100vw)'
                       }}
                       className="flex items-center space-x-3 lg:space-x-4 p-3 rounded-xl bg-slate-50 hover:bg-slate-100"
                     >

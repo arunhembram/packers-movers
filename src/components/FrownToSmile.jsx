@@ -185,7 +185,11 @@ const FrownToSmile = ({ id, className = '' }) => {
       <h1 className="text-4xl md:text-6xl font-bold text-white text-center md:text-left">{tHero.title}</h1>
 
       <p className="mt-4 text-xl md:text-2xl text-white text-center md:text-left">
-        {tHero.subtitle.replace('{{count}}', count.toLocaleString())}
+        {tHero.subtitle.split('{{count}}')[0]}
+        <span className="inline-block bg-gradient-to-r from-yellow-300/80 via-pink-400/80 to-red-400/80 text-gray-900 font-extrabold px-3 py-1 rounded-lg text-2xl md:text-3xl mx-1">
+          {count.toLocaleString()}
+        </span>
+        {tHero.subtitle.split('{{count}}')[1]}
       </p>
       <p className="mt-2 text-sm md:text-base text-white text-center md:text-left opacity-80">
         {tHero.engagement}

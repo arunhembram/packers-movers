@@ -1,0 +1,39 @@
+@keyframes jump-shake {
+  /* Idle for ~5 seconds (of 6s total) */
+  0%, 83.33% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  /* Jump up (300% height) */
+  85% {
+    transform: translateY(-300%) rotate(0deg);
+  }
+
+  /* Shake while in the air */
+  86% {
+    transform: translateY(-300%) rotate(8deg);
+  }
+  88% {
+    transform: translateY(-300%) rotate(-8deg);
+  }
+  90% {
+    transform: translateY(-300%) rotate(6deg);
+  }
+  92% {
+    transform: translateY(-300%) rotate(-6deg);
+  }
+  94% {
+    transform: translateY(-300%) rotate(0deg);
+  }
+
+  /* Return */
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.jump-shake {
+  animation: jump-shake 6s ease-in-out infinite;
+  backface-visibility: hidden; /* Prevent flickering on some browsers */
+  transform-origin: center bottom;
+}

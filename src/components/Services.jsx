@@ -187,12 +187,12 @@ export default function Services() {
     
     // Clamp drag distance for smoother feel
     const clampedDiff = Math.max(-cardSpacing * 1.5, Math.min(cardSpacing * 1.5, diff));
-    setDragOffset(clampedDiff * 0.5);
+    setDragOffset(clampedDiff * 0.8);
   }, [isDragging, startX, hasAdvanced, swipeThreshold, totalServices, cardSpacing]);
   
   const handleDragEnd = useCallback(() => {
     if (!isDragging) return;
-    const threshold = 50;
+    const threshold = 30;
     if (Math.abs(dragOffset) > threshold) {
       if (dragOffset < 0) {
         setCurrentIndex(prev => (prev + 1) % totalServices);
