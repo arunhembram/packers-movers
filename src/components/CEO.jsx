@@ -40,10 +40,10 @@ const CEO = () => {
   ];
 
   const floatingIcons = [
-    { icon: <Trophy className="w-6 h-6 text-yellow-400" />, position: 'top-4 right-8', delay: 'delay-1000' },
-    { icon: <Handshake className="w-6 h-6 text-blue-400" />, position: 'top-12 left-4', delay: 'delay-1200' },
-    { icon: <Brain className="w-6 h-6 text-purple-400" />, position: 'bottom-8 right-4', delay: 'delay-1400' },
-    { icon: <Shield className="w-6 h-6 text-green-400" />, position: 'bottom-4 left-8', delay: 'delay-1600' }
+    { icon: <Trophy className="w-4 h-4 lg:w-6 lg:h-6 text-yellow-400" />, position: 'top-2 right-4 lg:top-4 lg:right-8', delay: 'delay-1000' },
+    { icon: <Handshake className="w-4 h-4 lg:w-6 lg:h-6 text-blue-400" />, position: 'top-6 left-2 lg:top-12 lg:left-4', delay: 'delay-1200' },
+    { icon: <Brain className="w-4 h-4 lg:w-6 lg:h-6 text-purple-400" />, position: 'bottom-4 right-2 lg:bottom-8 lg:right-4', delay: 'delay-1400' },
+    { icon: <Shield className="w-4 h-4 lg:w-6 lg:h-6 text-green-400" />, position: 'bottom-2 left-4 lg:bottom-4 lg:left-8', delay: 'delay-1600' }
   ];
 
   /* ------------------ RENDER ------------------ */
@@ -73,10 +73,11 @@ const CEO = () => {
                   }`}
                 >
                   <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-purple-500 p-1 shadow-2xl">
-                    <div className="w-full h-full rounded-full bg-slate-200 flex items-center justify-center overflow-hidden">
-                      {/* Placeholder initials – replace with an <img src="/path/to/photo.jpg" ... /> */}
-                      <img src={ceoImage} alt="CEO" className="w-full h-full rounded-full object-cover" />
-                    </div>
+                    <div className="w-full h-full rounded-full bg-slate-200 flex items-center justify-center">
+                       <div className="w-36 h-36 lg:w-48 lg:h-48 bg-gradient-to-br from-slate-300 to-slate-400 rounded-full overflow-hidden">
+                         <img src={ceoImage} alt="CEO" className="w-full h-full object-cover" />
+                       </div>
+                     </div>
                   </div>
                 </div>
 
@@ -86,7 +87,7 @@ const CEO = () => {
                     key={index}
                     className={`absolute ${item.position} animate-bounce ${item.delay} ${
                       isVisible ? 'opacity-100' : 'opacity-0'
-                    } transition-opacity duration-1000 hidden lg:block`}
+                    } transition-opacity duration-1000 block`}
                   >
                     <div className="bg-white p-3 rounded-full shadow-lg">{item.icon}</div>
                   </div>
