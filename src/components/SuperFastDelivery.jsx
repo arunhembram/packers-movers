@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import './SuperFastDelivery.css';
 
@@ -6,7 +6,7 @@ export default function SuperFastDelivery({ id, className = '' }) {
   const { lang, translations } = useLanguage();
   const tFast = translations[lang]?.superFast || translations.en.superFast;
   const sectionRef = useRef(null);
-  const [smilesCount, setSmilesCount] = useState(10000);
+  // removed dynamic smiles counter state
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,13 +26,7 @@ export default function SuperFastDelivery({ id, className = '' }) {
     };
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSmilesCount(prev => prev + 1);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, []);
+  
 
   const startAnimation = () => {
     let currentSpeed = 0;
@@ -148,17 +142,17 @@ export default function SuperFastDelivery({ id, className = '' }) {
         </div>
         <div className="odometer-container">
           <div className="odometer-label text-lg sm:text-base">{tFast.odometerLabel}</div>
-          <div className="flex items-center justify-center">
-            <div className="odometer" id="odometer">
-              {String(smilesCount).split('').map((digit, i) => (
-                <div className="digit-container" key={i}>
-                  <div className="digit">{digit}</div>
+          <div className="odometer" id="odometer">
+            {[5, 4, 3, 2, 1, 0].map(i => (
+              <div className="digit-container" key={i}>
+                <div className="digit-wheel" id={`digit${i}`}>
+                  {[...Array(10).keys()].map(d => (
+                    <div className="digit" key={d}>{d}</div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div className="plus-icon ml-2 text-green-500 animate-pulse">
-              <i className="fas fa-plus" />
-            </div>
+              </div>
+            ))}
+            <div className="km-label">km</div>
           </div>
         </div>
       </div>
