@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext.jsx';
 import { Award, Users, Shield, Eye, Trophy, Handshake, Brain } from 'lucide-react';
 import { useSection } from '../context/SectionContext.jsx';
+import ceoImage from '../assets/images/ceo/ceo.jpeg';
 
 // CEO / Founder presentation section with animated achievements
 const CEO = () => {
@@ -74,9 +75,7 @@ const CEO = () => {
                   <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-purple-500 p-1 shadow-2xl">
                     <div className="w-full h-full rounded-full bg-slate-200 flex items-center justify-center overflow-hidden">
                       {/* Placeholder initials – replace with an <img src="/path/to/photo.jpg" ... /> */}
-                      <div className="w-36 h-36 lg:w-48 lg:h-48 bg-gradient-to-br from-slate-300 to-slate-400 rounded-full flex items-center justify-center">
-                        <div className="text-4xl lg:text-6xl font-bold text-slate-600">RK</div>
-                      </div>
+                      <img src={ceoImage} alt="CEO" className="w-full h-full rounded-full object-cover" />
                     </div>
                   </div>
                 </div>
