@@ -173,7 +173,7 @@ export default function Services() {
     const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
     setStartX(clientX);
     
-    dragStartIndexRef.current = index; 
+    
   }, []);
 
   const handleDragMove = useCallback((e) => {
@@ -182,32 +182,28 @@ export default function Services() {
     const clientX = e.clientX || (e.touches && e.touches[0]?.clientX);
     const diff = clientX - startX;
     
-    // Only advance once per drag session when threshold is crossed
-    if (!hasAdvanced && Math.abs(diff) > swipeThreshold) {
-      setHasAdvanced(true);
-      setCurrentIndex(prev => {
-        if (diff < 0) {
-          // swipe LEFT → show next (right) card
-          return (prev + 1) % totalServices;
-        } else {
-          // swipe RIGHT → show previous (left) card
-          return (prev - 1 + totalServices) % totalServices;
-        }
-      });
-    }
+    // Update drag offset for visual feedback
+    /* index update handled on drag end */
     
-    // Set drag offset but clamp it to prevent excessive movement
-    const clampedDiff = Math.max(-cardSpacing, Math.min(cardSpacing, diff));
-    setDragOffset(clampedDiff * 0.3); // Reduced multiplier for smoother feel
+    // Clamp drag distance for smoother feel
+    const clampedDiff = Math.max(-cardSpacing * 1.5, Math.min(cardSpacing * 1.5, diff));
+    setDragOffset(clampedDiff * 0.5);
   }, [isDragging, startX, hasAdvanced, swipeThreshold, totalServices, cardSpacing]);
   
   const handleDragEnd = useCallback(() => {
     if (!isDragging) return;
-    
+    const threshold = 50;
+    if (Math.abs(dragOffset) > threshold) {
+      if (dragOffset < 0) {
+        setCurrentIndex(prev => (prev + 1) % totalServices);
+      } else {
+        setCurrentIndex(prev => (prev - 1 + totalServices) % totalServices);
+      }
+    }
     setIsDragging(false);
     setDragOffset(0);
-    setHasAdvanced(false); // Reset for next drag
-  }, [isDragging]);
+    // restart autoplay handled by existing effects
+  }, [isDragging, dragOffset, totalServices]);
 
   // Global event listeners for drag
   useEffect(() => {
